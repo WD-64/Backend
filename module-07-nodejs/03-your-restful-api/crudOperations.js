@@ -16,5 +16,8 @@ export const getAllProducts = async (req, res) => {
     res.end(JSON.stringify(results.rows));
   } catch (error) {
     console.log(error);
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ message: 'Internal server error' }));
   }
 };
