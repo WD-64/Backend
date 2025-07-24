@@ -1,10 +1,11 @@
 {
-  "name": "05-middleware",
+  "name": "06-middleware",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch --env-file=.env index.js"
+    "dev": "node -r dotenv/config --watch index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -12,8 +13,10 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
-    "pg": "^8.16.3",
-    "pg-hstore": "^2.3.4",
+    "pg": "^8.16.0",
     "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "dotenv": "^16.5.0"
   }
 }

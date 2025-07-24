@@ -1,23 +1,20 @@
 import sequelize from '../db/dbConnection.js';
 import { DataTypes } from 'sequelize';
 
-const User = sequelize.define('Users', {
+const User = sequelize.define('User', {
   firstName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   email: {
     type: DataTypes.STRING,
-    validate: {
-      isEmail: true,
-    },
-  },
+    allowNull: false,
+    unique: true
+  }
 });
-
-User.sync({ alter: true });
 
 export default User;
