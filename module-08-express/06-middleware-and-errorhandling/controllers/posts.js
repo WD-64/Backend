@@ -1,75 +1,69 @@
 import Post from '../models/Post.js';
 import User from '../models/User.js';
+import ErrorResponse from '../utils/ErrorResponse.js';
 
 const getPosts = async (req, res) => {
-  try {
-    const posts = await Post.findAll({ include: User });
-    res.json(posts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const posts = await Post.findAll({ include: User });
+
+  if (!posts.length) throw new ErrorResponse('No posts available', 404);
+
+  res.json(posts);
 };
 
 const createPost = async (req, res) => {
-  try {
-    const {
-      body: { title, content, userId }
-    } = req;
-    if (!title || !content || !userId)
-      return res.status(400).json({ error: 'title, content, and userId are required' });
-    const post = await Post.create(req.body);
-    const user = await post.getUser();
-    post.dataValues.user = user;
-    res.json(post);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const {
+    body: { title, content, userId },
+  } = req;
+
+  if (!title || !content || !userId)
+    throw new ErrorResponse('Title, content and userId are required', 400);
+
+  const post = await Post.create(req.body);
+  const user = await post.getUser();
+  post.dataValues.user = user;
+
+  res.json(post);
 };
 
 const getPostById = async (req, res) => {
-  try {
-    const {
-      params: { id }
-    } = req;
-    const post = await Post.findByPk(id, { include: User });
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-    res.json(post);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const {
+    params: { id },
+  } = req;
+
+  const post = await Post.findByPk(id, { include: User });
+  if (!post) throw new ErrorResponse('Post not found', 404);
+
+  res.json(post);
 };
 
 const updatePost = async (req, res) => {
-  try {
-    const {
-      body: { title, content, userId },
-      params: { id }
-    } = req;
-    if (!title || !content || !userId)
-      return res.status(400).json({ error: 'title, content, and userId are required' });
-    const post = await Post.findByPk(id);
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-    await post.update(req.body);
-    const user = await post.getUser();
-    post.dataValues.user = user;
-    res.json(post);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const {
+    body: { title, content, userId },
+    params: { id },
+  } = req;
+
+  if (!title || !content || !userId)
+    throw new ErrorResponse('title, content, and userId are required', 400);
+
+  const post = await Post.findByPk(id);
+  if (!post) throw new ErrorResponse('Post not found', 404);
+  await post.update(req.body);
+  const user = await post.getUser();
+  post.dataValues.user = user;
+
+  res.json(post);
 };
 
 const deletePost = async (req, res) => {
-  try {
-    const {
-      params: { id }
-    } = req;
-    const post = await Post.findByPk(id);
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-    await post.destroy();
-    res.json({ message: 'Post deleted' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const {
+    params: { id },
+  } = req;
+
+  const post = await Post.findByPk(id);
+  if (!post) throw new ErrorResponse('Post not found', 404);
+  await post.destroy();
+
+  res.json({ message: 'Post deleted' });
 };
 
 export { createPost, getPostById, getPosts, updatePost, deletePost };
