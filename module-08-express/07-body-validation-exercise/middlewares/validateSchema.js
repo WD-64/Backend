@@ -9,7 +9,12 @@ const validateSchema = (schema) => {
     const { data, error } = schema.safeParse(req.body);
 
     if (error) {
-      throw new Error(z.prettifyError(error), { cause: 400 }); //This error gets caught in the errohandler function
+      //Option One (Send all error messages at once)
+      // const allErrors = error.issues.map((issue) => issue.message);
+      // throw new Error(allErrors, { cause: 400 }); //This error gets caught in the errohandler function
+
+      //Option Two (Send single Error message at once)
+      throw new Error(error.issues[0].message, { cause: 400 });
     } else {
       //Option 1: Creates a new property in req object with sanitized data from Zod
       req.sanitizedBody = data;
