@@ -8,10 +8,14 @@ const verifyToken = async (req, res, next) => {
   //First, we check if there is even a cookie called token
   if (!token) throw new Error('Unauthorized', { cause: 401 });
 
+  //We then verify the token
+  //If successful, jwt returns the payload
   const payload = jwt.verify(token, process.env.JWT_SECRET);
 
+  // We can then add the id from the payload to the req body.
   req.body.author = payload.id;
 
+  //Pass control to next middleware or request handler(controller function)
   next();
 };
 

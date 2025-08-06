@@ -6,6 +6,8 @@ import { postSchema } from '../zod/schemas.js';
 
 const postsRouter = Router();
 
+//We use the verifyToken middleware on any endpoint and HTTP method that requires an authenticated user
+
 postsRouter.route('/').get(getAllPosts).post(verifyToken, validateZod(postSchema), createPost);
 
 postsRouter
