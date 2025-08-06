@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const signIn = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select('+password');
+  let user = await User.findOne({ email }).select('+password');
   if (!user) throw new Error('Invalid Credentials', { cause: 400 });
 
   const isMatch = await bcrypt.compare(password, user.password);
@@ -25,8 +25,12 @@ const signIn = async (req, res) => {
     sameSite: isProduction ? 'None' : 'Lax'
   };
 
+  user = user.toObject(); //Converts mongodb object to regular JS object
+  delete user.password; // Delete password since its not needed for client
+
   res.cookie('token', token, cookieOptions);
-  res.json({ message: 'user logged in' });
+  // res.json({ message: 'user logged in' })
+  res.json(user);
 };
 
 const signUp = async (req, res) => {
