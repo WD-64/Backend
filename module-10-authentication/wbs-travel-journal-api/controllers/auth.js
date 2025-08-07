@@ -72,4 +72,12 @@ const signOut = async (req, res) => {
   res.status(200).json({ message: 'Goodbye' });
 };
 
-export { signIn, signUp, signOut };
+const me = async (req, res) => {
+  const user = await User.findById(req.userId);
+
+  if (!user) throw new Error('User does not exist', { cause: 404 });
+
+  res.json(user);
+};
+
+export { signIn, signUp, signOut, me };

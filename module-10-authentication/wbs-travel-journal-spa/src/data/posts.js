@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_APP_TRAVEL_JOURNAL_API_URL;
-if (!API_URL) throw new Error('API URL is required, are you missing a .env file?');
+if (!API_URL)
+  throw new Error('API URL is required, are you missing a .env file?');
 const baseURL = `${API_URL}/posts`;
 
 export const getPosts = async () => {
@@ -15,7 +16,7 @@ export const getPosts = async () => {
   return data;
 };
 
-export const getSinglePost = async id => {
+export const getSinglePost = async (id) => {
   const res = await fetch(`${baseURL}/${id}`);
   if (!res.ok) {
     const errorData = await res.json();
@@ -28,13 +29,14 @@ export const getSinglePost = async id => {
   return data;
 };
 
-export const createPost = async formData => {
+export const createPost = async (formData) => {
   const res = await fetch(baseURL, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(formData)
+    body: JSON.stringify(formData),
+    credentials: 'include',
   });
   if (!res.ok) {
     const errorData = await res.json();

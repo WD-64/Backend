@@ -13,7 +13,8 @@ const verifyToken = async (req, res, next) => {
   const payload = jwt.verify(token, process.env.JWT_SECRET);
 
   // We can then add the id from the payload to the req body.
-  req.body.author = payload.id;
+  // req.body.author = payload.id;
+  req.userId = payload.id;
 
   //Pass control to next middleware or request handler(controller function)
   next();

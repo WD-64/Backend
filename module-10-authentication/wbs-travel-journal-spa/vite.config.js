@@ -11,8 +11,8 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
-    }
+      '@': resolve(__dirname, './src'),
+    },
   },
-  plugins: [react(), tailwindcss()]
+  plugins: [react(), tailwindcss()],
 });

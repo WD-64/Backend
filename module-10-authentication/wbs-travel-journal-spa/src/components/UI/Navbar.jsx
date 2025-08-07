@@ -1,9 +1,21 @@
 import { Link, NavLink } from 'react-router';
 import { useContext } from 'react';
+import { toast } from 'react-toastify';
 import { AuthContext } from '@/context/AuthContext';
+import { signOut } from '@/data/auth';
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+
+  const logOut = async () => {
+    try {
+      await signOut();
+      toast.success('Successfully signed out!');
+      setUser(null);
+    } catch (error) {
+      toast.error('Failed to sign out');
+    }
+  };
 
   return (
     <div className='navbar bg-base-100'>
@@ -29,7 +41,7 @@ const Navbar = () => {
           <li>{!user && <NavLink to='/register'>Register</NavLink>}</li>
           <li>
             {user ? (
-              <button>Logout</button>
+              <button onClick={logOut}>Logout</button>
             ) : (
               <NavLink to='/login'>Login</NavLink>
             )}
