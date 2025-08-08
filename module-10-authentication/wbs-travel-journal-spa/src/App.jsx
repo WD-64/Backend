@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
-import { RootLayout } from '@/layouts';
+import { RootLayout, ProtectedLayout } from '@/layouts';
 import { CreatePost, Home, Login, NotFound, Post, Register } from '@/pages';
-import ProtectedLayout from './layouts/ProtectedLayout';
 
 const App = () => (
   <BrowserRouter>

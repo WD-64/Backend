@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '@/context/AuthContext';
-import { signOut } from '@/data/auth';
+import { signOut } from '@/data';
 
 const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);

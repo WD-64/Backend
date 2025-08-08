@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
-import { signUp } from '@/data/auth';
+import { signUp } from '@/data';
 
 const Register = () => {
   const [{ firstName, lastName, email, password, confirmPassword }, setForm] =
