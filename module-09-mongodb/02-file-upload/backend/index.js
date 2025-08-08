@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import upload from './middlewares/upload.js';
 import { uploadController } from './controllers/uploadController.js';
 
@@ -6,6 +7,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/upload', upload.single('profileImg'), uploadController);
 

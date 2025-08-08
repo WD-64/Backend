@@ -4,13 +4,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch index.js"
+    "dev": "node --watch --env-file=.env index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cloudinary": "^2.7.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "multer": "^2.0.2"
   }

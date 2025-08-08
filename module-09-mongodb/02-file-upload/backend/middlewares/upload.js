@@ -6,19 +6,19 @@ import multer from 'multer';
 //This is for more custom configuration
 const storage = multer.diskStorage({
   //To instruct multer where to store the images
-  destination: function (req, file, cb) {
-    cb(null, 'uploads');
+  // destination: function (req, file, cb) {
+  //   cb(null, 'uploads');
 
-    /*
-      Another Example 
+  //   /*
+  //     Another Example
 
-      if (file.mimetype === 'image/png') {
-        cb(null, 'uploads/images');
-      } else if (file.mimetype === 'application/pdf') {
-        cb(null, 'uploads/pdf');
-      }
-    */
-  },
+  //     if (file.mimetype === 'image/png') {
+  //       cb(null, 'uploads/images');
+  //     } else if (file.mimetype === 'application/pdf') {
+  //       cb(null, 'uploads/pdf');
+  //     }
+  //   */
+  // },
 
   //To instruct multer on how to name the file
   filename: function (req, file, cb) {
